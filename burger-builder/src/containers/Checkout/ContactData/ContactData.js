@@ -13,7 +13,7 @@ class ContactData extends Component {
             name: {
                 elementType: 'input',
                 elementConfig: {
-                    type:'text',
+                    type: 'text',
                     placeholder: 'Your Name'
                 },
                 value: ''
@@ -21,7 +21,7 @@ class ContactData extends Component {
             street: {
                 elementType: 'input',
                 elementConfig: {
-                    type:'text',
+                    type: 'text',
                     placeholder: 'Street'
                 },
                 value: ''
@@ -29,7 +29,7 @@ class ContactData extends Component {
             zipCode: {
                 elementType: 'input',
                 elementConfig: {
-                    type:'text',
+                    type: 'text',
                     placeholder: 'ZIP Code'
                 },
                 value: ''
@@ -37,7 +37,7 @@ class ContactData extends Component {
             country: {
                 elementType: 'input',
                 elementConfig: {
-                    type:'text',
+                    type: 'text',
                     placeholder: 'Country'
                 },
                 value: ''
@@ -45,7 +45,7 @@ class ContactData extends Component {
             email: {
                 elementType: 'input',
                 elementConfig: {
-                    type:'email',
+                    type: 'email',
                     placeholder: 'Your E-Mail'
                 },
                 value: ''
@@ -54,8 +54,8 @@ class ContactData extends Component {
                 elementType: 'select',
                 elementConfig: {
                     options: [
-                        {value: 'fastest', displayValue: 'Fastest'},
-                        {value: 'cheapest', displayValue: 'Cheapest'}
+                        { value: 'fastest', displayValue: 'Fastest' },
+                        { value: 'cheapest', displayValue: 'Cheapest' }
                     ]
                 },
                 value: ''
@@ -83,11 +83,28 @@ class ContactData extends Component {
             });
     }
 
+    inputChangedHandler = (event) => {
+        console.log(event.target.value);
+    }
+
     render() {
+        const formElementsArray = [];
+        for (let key in this.state.orderForm) {
+            formElementsArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            });
+        }
         let form = (
             <form>
-                <Input elementType='...' elementConfig='...' value='...'/>
-
+                {formElementsArray.map(formElement => (
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value} 
+                        changed={this.inputChangedHandler}/>
+                ))}
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         );
